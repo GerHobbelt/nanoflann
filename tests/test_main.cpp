@@ -40,7 +40,7 @@
 using namespace std;
 using namespace nanoflann;
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	testing::InitGoogleTest(&argc, argv);
 
