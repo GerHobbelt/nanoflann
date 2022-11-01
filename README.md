@@ -38,7 +38,7 @@ Cite as:
   $ brew install nanoflann
   ```
 * Linux users can also install it with [Linuxbrew](https://linuxbrew.sh/) with: `brew install homebrew/science/nanoflann`
-* List of [**stable releases**](https://github.com/jlblancoc/nanoflann/releases). Check out the [CHANGELOG](https://raw.githubusercontent.com/jlblancoc/nanoflann/master/CHANGELOG.txt)
+* List of [**stable releases**](https://github.com/jlblancoc/nanoflann/releases). Check out the [CHANGELOG](https://github.com/jlblancoc/nanoflann/blob/master/CHANGELOG.md)
 
 Although nanoflann itself doesn't have to be compiled, you can build some examples and tests with:
 
@@ -132,6 +132,18 @@ add_executable(my_project test.cpp)
 # Make sure the include path is used:
 target_link_libraries(my_project nanoflann::nanoflann)
 ```
+
+### 1.8. Package Managers
+
+You can download and install nanoflann using the [vcpkg](https://github.com/Microsoft/vcpkg) dependency manager:
+
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    ./vcpkg install nanoflann
+
+The nanoflann port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
 
 ------
 
