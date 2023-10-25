@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(nanoflann_gui_example_R3)
+project(nanoflann_gui_example_bearings)
 
 find_package(nanoflann REQUIRED)
 find_package(mrpt-gui REQUIRED)
@@ -14,5 +14,3 @@ endif()
 # Make sure the include path is used:
 target_link_libraries(${PROJECT_NAME} nanoflann::nanoflann mrpt::gui)
 
-# for this example to find "../utils.h"
-target_include_directories(${PROJECT_NAME} PRIVATE ".")

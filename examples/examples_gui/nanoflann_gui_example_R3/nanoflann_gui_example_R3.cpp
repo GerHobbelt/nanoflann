@@ -32,6 +32,7 @@
 #include <mrpt/opengl/CSphere.h>
 #include <mrpt/opengl/stock_objects.h>
 #include <mrpt/random/RandomGenerators.h>
+#include <mrpt/system/CTimeLogger.h>
 
 #include <cstdlib>
 #include <ctime>
@@ -88,9 +89,18 @@ void kdtree_demo(const size_t N)
         PointCloud<double>, 3 /* dim */
         >;
 
+    mrpt::system::CTimeLogger profiler;
+
+    mrpt::system::CTimeLoggerEntry tle(profiler, "build_kd_tree");
+
     my_kd_tree_t index(3 /*dim*/, cloud, {10 /* max leaf */});
 
+    tle.stop();
+
     auto& rng = mrpt::random::getRandomGenerator();
+
+    // Declare here to avoid reallocations:
+    std::vector<std::pair<size_t, double>> indicesDists;
 
     // Loop: different searches until the window is closed:
     while (win.isOpen())
@@ -104,11 +114,15 @@ void kdtree_demo(const size_t N)
             rng.drawUniform(-0.3, maxRangeXY + 0.3),
             rng.drawUniform(-0.3, maxRangeZ + 0.3)};
 
-        std::vector<std::pair<size_t, double>>     indicesDists;
+        mrpt::system::CTimeLoggerEntry tle2(profiler, "query");
+
+        indicesDists.clear();
         nanoflann::RadiusResultSet<double, size_t> resultSet(
             sqRadius, indicesDists);
 
         index.findNeighbors(resultSet, queryPt);
+
+        tle2.stop();
 
         std::cout << "\nQuery point: (" << queryPt[0] << "," << queryPt[1]
                   << "," << queryPt[2] << ") => " << resultSet.size()
@@ -151,8 +165,6 @@ void kdtree_demo(const size_t N)
 
 int main()
 {
-    // Randomize Seed
-    srand(static_cast<unsigned int>(time(nullptr)));
     kdtree_demo(1000);
     return 0;
 }
